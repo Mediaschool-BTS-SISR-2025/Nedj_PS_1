@@ -1,2 +1,2 @@
-Write-Host "Fermeture du menu." -ForegroundColor Cyan
-    $continue = $false
+Write-Host "Merci d'avoir utilisé ce menu. À bientôt !" -ForegroundColor Cyan
+
