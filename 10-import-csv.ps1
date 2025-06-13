@@ -6,10 +6,10 @@ $logFile = ".\import_csv.log"
 # Importer le module Active Directory
 try {
     Import-Module ActiveDirectory -ErrorAction Stop
-    Write-Host "✅ Module ActiveDirectory chargé." -ForegroundColor Green
+    Write-Host "✅ Module ActiveDirectory charge." -ForegroundColor Green
 }
 catch {
-    Write-Host "❌ Erreur : le module ActiveDirectory n'est pas installé ou accessible." -ForegroundColor Red
+    Write-Host "❌ Erreur : le module ActiveDirectory n'est pas installe ou accessible." -ForegroundColor Red
     return
 }
 
@@ -51,8 +51,8 @@ try {
         $existingUser = Get-ADUser -Filter "SamAccountName -eq '$samAccountName'" -ErrorAction SilentlyContinue
 
         if ($existingUser) {
-            Write-Host "⚠️ Utilisateur '$samAccountName' déjà existant. Ignoré." -ForegroundColor Yellow
-            Add-Content $logFile "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') - Utilisateur '$samAccountName' déjà existant"
+            Write-Host "⚠️ Utilisateur '$samAccountName' deja existant. Ignore." -ForegroundColor Yellow
+            Add-Content $logFile "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') - Utilisateur '$samAccountName' deja existant"
             continue
         }
 
@@ -67,8 +67,8 @@ try {
                        -ChangePasswordAtLogon $true `
                        -Path $ouPath
 
-            Write-Host "✅ Utilisateur '$samAccountName' créé dans $ouPath." -ForegroundColor Green
-            Add-Content $logFile "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') - Utilisateur '$samAccountName' créé dans $ouPath"
+            Write-Host "✅ Utilisateur '$samAccountName' cree dans $ouPath." -ForegroundColor Green
+            Add-Content $logFile "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') - Utilisateur '$samAccountName' cree dans $ouPath"
 
             # Appliquer les horaires selon l’OU
             switch -Wildcard ($ouPath) {
@@ -80,14 +80,14 @@ try {
 
             if ($logonHours) {
                 Set-ADUser $samAccountName -LogonHours $logonHours
-                Write-Host "🕘 Heures de connexion appliquées à '$samAccountName'." -ForegroundColor Cyan
+                Write-Host "🕘 Heures de connexion appliquees a '$samAccountName'." -ForegroundColor Cyan
             } else {
-                Write-Host "❗ Aucune restriction horaire appliquée à '$samAccountName' (OU non reconnue)." -ForegroundColor Yellow
+                Write-Host "❗ Aucune restriction horaire appliquee a '$samAccountName' (OU non reconnue)." -ForegroundColor Yellow
             }
 
         }
         catch {
-            Write-Host "❌ Erreur lors de la création de l'utilisateur '$samAccountName' : $_" -ForegroundColor Red
+            Write-Host "❌ Erreur lors de la creation de l'utilisateur '$samAccountName' : $_" -ForegroundColor Red
             Add-Content $logFile "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') - Erreur utilisateur '$samAccountName' : $_"
         }
     }

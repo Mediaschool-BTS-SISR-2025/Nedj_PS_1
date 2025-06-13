@@ -6,7 +6,7 @@ $newName = Read-Host "Entrez le nouveau nom du PC"
 
 # Vérification
 if ([string]::IsNullOrWhiteSpace($newName)) {
-    Write-Host "Nom invalide. Opération annulée." -ForegroundColor Red
+    Write-Host "Nom invalide. Operation annulee." -ForegroundColor Red
     return
 }
 
@@ -18,20 +18,20 @@ Write-Host "Nouveau nom proposé : $newName"
 # Confirmation utilisateur
 $confirmation = Read-Host "Confirmez-vous le changement ? (O/N)"
 if ($confirmation -ne 'O' -and $confirmation -ne 'o') {
-    Write-Host "Opération annulée par l'utilisateur." -ForegroundColor Yellow
+    Write-Host "Operation annulee par l'utilisateur." -ForegroundColor Yellow
     return
 }
 
 # Renommage + redémarrage
 try {
     Rename-Computer -NewName $newName -Force
-    Write-Host "Le PC a été renommé avec succès en '$newName'." -ForegroundColor Green
+    Write-Host "Le PC a ete renomme avec succes en '$newName'." -ForegroundColor Green
 
-    $restart = Read-Host "Voulez-vous redémarrer maintenant ? (O/N)"
+    $restart = Read-Host "Voulez-vous redemarrer maintenant ? (O/N)"
     if ($restart -eq 'O' -or $restart -eq 'o') {
         Restart-Computer
     } else {
-        Write-Host "Redémarrage annulé. Le changement sera effectif après redémarrage." -ForegroundColor Yellow
+        Write-Host "Redemarrage annule. Le changement sera effectif apres redemarrage." -ForegroundColor Yellow
     }
 }
 catch {

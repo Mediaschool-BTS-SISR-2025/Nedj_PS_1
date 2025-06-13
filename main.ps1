@@ -13,14 +13,14 @@ while ($continue) {
     Write-Host "5. Configurer DNS"
     Write-Host "6. Configurer DHCP"
     Write-Host "----------------------------------"
-    Write-Host "7. Ajouter une Unité d'Organisation (OU)"
+    Write-Host "7. Ajouter une Unite d'Organisation (OU)"
     Write-Host "8. Ajouter un groupe d’utilisateurs"
     Write-Host "9. Ajouter un utilisateur"
     Write-Host "10. Importer des utilisateurs depuis un CSV"
     Write-Host "=================================="
     Write-Host "11. Quitter"
     
-    $choix = Read-Host "Sélectionnez une option"
+    $choix = Read-Host "Selectionnez une option"
 
    switch ($choix) {
     '1' { . "$PSScriptRoot\1-rename.ps1" }
@@ -34,11 +34,11 @@ while ($continue) {
     '9' { . "$PSScriptRoot\9-add-user.ps1" }
     '10' { . "$PSScriptRoot\10-import-csv.ps1" }
     '11' {
-        Write-Host "Fermeture du menu. À bientôt !" -ForegroundColor Cyan
+        Write-Host "Fermeture du menu. À bientot !" -ForegroundColor Cyan
         $continue = $false
     }
     default {
-        Write-Host "Option invalide. Veuillez réessayer." -ForegroundColor Red
+        Write-Host "Option invalide. Veuillez reessayer." -ForegroundColor Red
     }
 }
 

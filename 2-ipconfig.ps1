@@ -2,7 +2,7 @@ Clear-Host
 Write-Host "=== Configuration d'une adresse IP fixe ===" -ForegroundColor Cyan
 
 # Lister les interfaces réseau disponibles
-Write-Host "`nInterfaces réseau détectées :" -ForegroundColor Yellow
+Write-Host "`nInterfaces reseau detectees :" -ForegroundColor Yellow
 Get-NetAdapter | Where-Object { $_.Status -eq 'Up' } | ForEach-Object {
     Write-Host "- $($_.Name) (MAC: $($_.MacAddress))"
 }
@@ -10,7 +10,7 @@ Get-NetAdapter | Where-Object { $_.Status -eq 'Up' } | ForEach-Object {
 # Saisie de l'interface
 $interfaceAlias = Read-Host "Entrez l'alias de l'interface réseau (ex: Ethernet)"
 if (-not (Get-NetAdapter -Name $interfaceAlias -ErrorAction SilentlyContinue)) {
-    Write-Host "`nInterface introuvable. Vérifiez le nom." -ForegroundColor Red
+    Write-Host "`nInterface introuvable. Verifiez le nom." -ForegroundColor Red
     return
 }
 

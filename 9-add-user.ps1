@@ -1,5 +1,5 @@
 Clear-Host
-Write-Host "=== Création d'un utilisateur Active Directory ===" -ForegroundColor Cyan
+Write-Host "=== Creation d'un utilisateur Active Directory ===" -ForegroundColor Cyan
 
 $logFile = ".\add_user.log"
 $domainPath = "DC=entreprise,DC=local"  # ⚠️ À adapter selon ton domaine
@@ -8,7 +8,7 @@ $ouOptions = @("Eleves", "Professeurs", "Administratif")
 # Importer le module Active Directory
 try {
     Import-Module ActiveDirectory -ErrorAction Stop
-    Write-Host "✅ Module ActiveDirectory chargé." -ForegroundColor Green
+    Write-Host "✅ Module ActiveDirectory charge." -ForegroundColor Green
 }
 catch {
     Write-Host "❌ Le module ActiveDirectory n'est pas disponible." -ForegroundColor Red
@@ -16,12 +16,12 @@ catch {
 }
 
 # Choix OU cible
-Write-Host "Sélectionnez l'OU dans laquelle créer l'utilisateur :"
+Write-Host "Selectionnez l'OU dans laquelle creer l'utilisateur :"
 for ($i = 0; $i -lt $ouOptions.Count; $i++) {
     Write-Host "$($i + 1). $($ouOptions[$i])"
 }
 do {
-    $selection = Read-Host "Entrez le numéro de l'OU (1 à 3)"
+    $selection = Read-Host "Entrez le numero de l'OU (1 à 3)"
 } while (-not ($selection -match '^[1-3]$'))
 
 $selectedOU = $ouOptions[$selection - 1]
@@ -40,7 +40,7 @@ function Get-LogonHours {
 }
 
 # Saisie des infos utilisateur
-$firstName = Read-Host "Entrez le prénom"
+$firstName = Read-Host "Entrez le prenom"
 $lastName = Read-Host "Entrez le nom"
 $samAccountName = Read-Host "Entrez le nom d'utilisateur (samAccountName)"
 $password = Read-Host "Entrez le mot de passe initial" -AsSecureString
@@ -48,8 +48,8 @@ $password = Read-Host "Entrez le mot de passe initial" -AsSecureString
 # Vérifier l'existence
 $existingUser = Get-ADUser -Filter "SamAccountName -eq '$samAccountName'" -ErrorAction SilentlyContinue
 if ($existingUser) {
-    Write-Host "⚠️ L'utilisateur '$samAccountName' existe déjà." -ForegroundColor Yellow
-    Add-Content -Path $logFile -Value "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') - Utilisateur '$samAccountName' déjà existant"
+    Write-Host "⚠️ L'utilisateur '$samAccountName' existe deja." -ForegroundColor Yellow
+    Add-Content -Path $logFile -Value "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') - Utilisateur '$samAccountName' deja existant"
     return
 }
 
@@ -64,8 +64,8 @@ try {
                -ChangePasswordAtLogon $true `
                -Path $ouPath
 
-    Write-Host "✅ Utilisateur '$samAccountName' créé dans $selectedOU." -ForegroundColor Green
-    Add-Content -Path $logFile -Value "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') - Utilisateur '$samAccountName' créé dans $ouPath"
+    Write-Host "✅ Utilisateur '$samAccountName' cree dans $selectedOU." -ForegroundColor Green
+    Add-Content -Path $logFile -Value "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') - Utilisateur '$samAccountName' cree dans $ouPath"
 
     # Appliquer logonHours en fonction de l'OU
     switch ($selectedOU) {
@@ -75,9 +75,9 @@ try {
     }
 
     Set-ADUser $samAccountName -LogonHours $logonHours
-    Write-Host "🕘 Heures de connexion appliquées à $samAccountName." -ForegroundColor Cyan
+    Write-Host "🕘 Heures de connexion appliquees à $samAccountName." -ForegroundColor Cyan
 }
 catch {
-    Write-Host "❌ Erreur lors de la création de l'utilisateur : $_" -ForegroundColor Red
-    Add-Content -Path $logFile -Value "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') - Erreur création utilisateur '$samAccountName' : $_"
+    Write-Host "❌ Erreur lors de la creation de l'utilisateur : $_" -ForegroundColor Red
+    Add-Content -Path $logFile -Value "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') - Erreur creation utilisateur '$samAccountName' : $_"
 }

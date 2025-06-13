@@ -1,2 +1,2 @@
-Write-Host "Merci d'avoir utilisé ce menu. À bientôt !" -ForegroundColor Cyan
+Write-Host "Merci d'avoir utilise ce menu. A bientot !" -ForegroundColor Cyan
 

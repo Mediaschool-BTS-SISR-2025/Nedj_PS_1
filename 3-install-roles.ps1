@@ -1,5 +1,5 @@
 Clear-Host
-Write-Host "=== Installation des rôles Windows Server ===" -ForegroundColor Cyan
+Write-Host "=== Installation des roles Windows Server ===" -ForegroundColor Cyan
 
 # Emplacement du journal
 $logPath = ".\installation_roles.log"
@@ -15,13 +15,13 @@ $roles = @{
 }
 
 # Affichage des rôles disponibles
-Write-Host "`nRôles disponibles :"
+Write-Host "`nRoles disponibles :"
 foreach ($key in $roles.Keys) {
     Write-Host "$key. $($roles[$key].Display)"
 }
 
 # Choix de l'utilisateur
-$choix = Read-Host "`nEntrez le numéro du rôle à installer (ou 6 pour quitter)"
+$choix = Read-Host "`nEntrez le numero du role a installer (ou 6 pour quitter)"
 
 if ($roles.ContainsKey($choix) -and $roles[$choix].Name -ne "Exit") {
     $roleName = $roles[$choix].Name
@@ -30,7 +30,7 @@ if ($roles.ContainsKey($choix) -and $roles[$choix].Name -ne "Exit") {
     # Vérification si le rôle est déjà installé
     $feature = Get-WindowsFeature -Name $roleName
     if ($feature.Installed) {
-        Write-Host "`nLe rôle '$roleDisplay' est déjà installé." -ForegroundColor Yellow
+        Write-Host "`nLe role '$roleDisplay' est deja installe." -ForegroundColor Yellow
     }
     else {
         Write-Host "`nInstallation de : $roleDisplay..." -ForegroundColor Cyan
@@ -39,13 +39,13 @@ if ($roles.ContainsKey($choix) -and $roles[$choix].Name -ne "Exit") {
             Install-WindowsFeature -Name $roleName -IncludeManagementTools -Verbose
 
             # Écriture dans le journal
-            $logEntry = "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') - Rôle installé : $roleDisplay ($roleName)"
+            $logEntry = "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') - Role installe : $roleDisplay ($roleName)"
             Add-Content -Path $logPath -Value $logEntry
 
-            Write-Host "`nRôle '$roleDisplay' installé avec succès !" -ForegroundColor Green
+            Write-Host "`nRole '$roleDisplay' installe avec succes !" -ForegroundColor Green
         }
         catch {
-            Write-Host "Erreur lors de l'installation du rôle : $_" -ForegroundColor Red
+            Write-Host "Erreur lors de l'installation du role : $_" -ForegroundColor Red
         }
     }
 }
